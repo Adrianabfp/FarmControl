@@ -1,0 +1,9 @@
+# Ignorar o ambiente virtual venv
+venv/
+
+# Ignorar arquivos de configuração do sistema
+.DS_Store
+Thumbs.db
+
+# Outros arquivos que você queira ignorar
+*.pyc

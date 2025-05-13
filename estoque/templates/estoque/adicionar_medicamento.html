@@ -1,0 +1,7 @@
+<h1>Adicionar Medicamento</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Adicionar Medicamento</button>
+</form>

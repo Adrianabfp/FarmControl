@@ -1,0 +1,61 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle de Estoque</title>
+    <link rel="stylesheet" href="{% static 'estoque/css/estilo.css' %}">
+</head>
+<body>
+    <div class="caixa">
+        <h1>Controle de Estoque de Produtos</h1>
+
+        <!-- Barra de Pesquisa -->
+        <form method="get" action="">
+            <input type="text" name="buscar" placeholder="Buscar produto..." />
+            <button type="submit" class="botao-principal">Buscar</button>
+        </form>
+
+        <!-- Botões -->
+        <div style="margin: 20px 0;">
+            <a href="{% url 'adicionar_produto' %}" class="botao-principal">Adicionar Produto</a>
+            <a href="{% url 'adicionar_medicamento' %}" class="botao-secundario">Adicionar Medicamento</a>
+        </div>
+
+        <!-- Tabela de Produtos -->
+        <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Quantidade</th>
+                    <th>Validade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                    <tr>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.categoria.nome }}</td>
+                        <td>{{ produto.quantidade }}</td>
+                        <td>{{ produto.data_validade }}</td> 
+                        <td>
+                            
+                            <a href="{% url 'editar_produto' produto.id %}">Editar</a>
+                            <a href="{% url 'excluir_produto' produto.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">Nenhum produto encontrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
