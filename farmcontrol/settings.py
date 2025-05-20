@@ -5,12 +5,12 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY e DEBUG via variável de ambiente para segurança em produção
-SECRET_KEY = os.environ.get('pNL7xIB8su8sR1d2GDEGm4WypdBpTjgelHdSYXsiPDz4at4pHr7dgUdXv7waY3VF9PI', 'sua-chave-de-desenvolvimento-aqui')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-de-desenvolvimento-aqui')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
 
 # Ajuste os hosts permitidos para seu domínio no Heroku e localhost
-ALLOWED_HOSTS = ['farmcontrol-adriana-70ca2f0e56ca.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['farmcontrol-adriana-70ca2f0e56ca.herokuapp.com', 'farmcontrol.onrender.com', 'localhost', '127.0.0.1']
 
 # App de usuários customizado
 AUTH_USER_MODEL = 'usuarios.Users'
@@ -48,9 +48,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
             ],
         },
     },
