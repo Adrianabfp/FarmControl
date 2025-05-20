@@ -1,1 +1,1 @@
-web: gunicorn farmcontrol.wsgi
+web: gunicorn farmcontrol.wsgi --log-file -
