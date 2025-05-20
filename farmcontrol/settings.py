@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY e DEBUG via variável de ambiente para segurança em produção
 SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-de-desenvolvimento-aqui')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
 # Ajuste os hosts permitidos para seu domínio no Heroku e localhost
 ALLOWED_HOSTS = ['farmcontrol-adriana-70ca2f0e56ca.herokuapp.com', 'farmcontrol.onrender.com', 'localhost', '127.0.0.1']
@@ -63,7 +63,7 @@ WSGI_APPLICATION = 'farmcontrol.wsgi.application'
 # Configuração do banco de dados:
 # Usa PostgreSQL no Heroku via DATABASE_URL
 # Usa SQLite localmente como fallback
-import dj_database_url
+
 
 DATABASES = {
     'default': dj_database_url.config(
