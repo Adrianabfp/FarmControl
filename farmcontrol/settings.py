@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('pNL7xIB8su8sR1d2GDEGm4WypdBpTjgelHdSYXsiPDz4at4pHr7
 DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
 
 # Ajuste os hosts permitidos para seu domínio no Heroku e localhost
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1').split()
+ALLOWED_HOSTS = ['farmcontrol-adriana-70ca2f0e56ca.herokuapp.com', 'localhost', '127.0.0.1']
 
 # App de usuários customizado
 AUTH_USER_MODEL = 'usuarios.Users'
