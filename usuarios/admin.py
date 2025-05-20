@@ -14,4 +14,12 @@ class UsersAdmin(admin_auth_django.UserAdmin):
         ('Cargo', {'fields': ('cargo',)}), 
     )
 
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'cargo'),
+        }),
+    )
+
+
 # Register your models here.

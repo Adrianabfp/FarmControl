@@ -1,22 +1,249 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'produtos/css/estilo.css' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmControl - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #c8f7f0, #d4e4ff);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: white;
+      width: 900px; /* aumentei a largura do container */
+      height: 565px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      display: flex;
+      overflow: hidden;
+    }
+
+    .left-panel {
+      background: #f0fcf9;
+      flex: 1.2;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #2f8373;
+    }
+
+    .left-panel img {
+      width: 80px;
+      margin-bottom: 30px;
+    }
+
+    .left-panel h1 {
+      font-size: 40px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .left-panel p {
+      margin-top: 10px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .right-panel {
+      flex: 1.1; /* aumentei um pouco a proporção do painel da direita */
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 320px; /* aumentei a largura mínima */
+      overflow: hidden;
+    }
+
+    .right-panel h2 {
+      font-size: 32px; /* aumentei o tamanho da fonte */
+      color: #2f8373;
+      margin-bottom: 10px;
+      white-space: nowrap;
+    }
+
+    .right-panel p {
+      font-size: 14px;
+      color: #6b6b6b;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2f8373;
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      border: 1.5px solid #b8e2db;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      color: #2f8373;
+    }
+
+    input:focus {
+      border-color: #45a198;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin: 15px 0 20px;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .options a {
+      color: #2f8373;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    button.primary {
+      width: 100%;
+      padding: 14px;
+      background: #2f8373;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button.primary:hover {
+      background: #276f61;
+    }
+
+    .divider {
+      margin: 20px 0;
+      text-align: center;
+      color: #999;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #ccc;
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    button.secondary {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 2px solid #2f8373;
+      color: #2f8373;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button.secondary:hover {
+      background: #2f8373;
+      color: white;
+    }
+
+    .signup {
+      text-align: center;
+      font-size: 12px;
+      color: #6b6b6b;
+      margin-top: 30px;
+    }
+
+    .signup a {
+      color: #2f8373;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Entrar</button>
-    </form>
+  <div class="container">
+    <div class="left-panel">
+      <img src="https://cdn-icons-png.flaticon.com/512/3209/3209170.png" alt="FarmControl Icon">
+      <h1>FarmControl</h1>
+      <p>Bem-vindo ao sistema de controle de estoque da saúde</p>
+    </div>
+    <div class="right-panel">
+      <h2>Login</h2>
+      <p>Entre para continuar sua experiência</p>
+     <form method="POST">
+      {% csrf_token %}
+
+  <label for="username">Usuário</label>
+  <input type="text" id="username" name="username" placeholder="Digite seu usuário" required />
+
+  <label for="password">Senha</label>
+  <input type="password" id="password" name="password" placeholder="Digite sua senha" required />
+
+  <div class="options">
+    <label><input type="checkbox" name="remember" /> Lembrar-me</label>
+    <a href="#">Esqueci a senha</a>
+  </div>
+
+  <button type="submit" class="primary">Entrar</button>
+
+  <div class="divider">ou</div>
+
+  <button type="button" class="secondary">Entrar com outro método</button>
+</form>
+
+
+
+      <div class="signup">
+        Não tem uma conta? <a href="#">Cadastre-se</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
-
-
-

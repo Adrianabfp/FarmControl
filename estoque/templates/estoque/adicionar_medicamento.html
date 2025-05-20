@@ -1,7 +1,163 @@
-<h1>Adicionar Medicamento</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Adicionar Medicamento</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3fff3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Adicionar Medicamento</button>
-</form>
+    .form-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 420px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #228B22;
+      margin-bottom: 30px;
+      font-size: 26px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 0 10px;
+      background-color: #fff;
+    }
+
+    .input-group i {
+      color: #999;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    .input-group input,
+    .input-group select {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 10px;
+      background-color: transparent;
+      height: 23px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #228B22;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1a731a;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      display: inline-block;
+      background-color: #888;
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Adicionar Medicamento</h1>
+    <form method="post">
+      {% csrf_token %}
+
+      <label for="nome">Nome:</label>
+      <div class="input-group">
+        <i class="fa fa-box"></i>
+        <input type="text" id="nome" name="nome" required>
+      </div>
+
+      <label for="categoria">Categoria:</label>
+      <div class="input-group">
+        <i class="fa fa-tags"></i>
+        <select id="categoria" name="categoria" required>
+          <option value="">----------</option>
+          {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <label for="quantidade">Quantidade:</label>
+      <div class="input-group">
+        <i class="fa fa-sort-numeric-up"></i>
+        <input type="number" id="quantidade" name="quantidade" required>
+      </div>
+
+      <label for="data_validade">Data validade:</label>
+      <div class="input-group">
+        <i class="fa fa-calendar-alt"></i>
+        <input type="date" id="data_validade" name="data_validade" required>
+      </div>
+
+      <label for="ultima_compra">Última compra:</label>
+      <div class="input-group">
+        <i class="fa fa-shopping-cart"></i>
+        <input type="date" id="ultima_compra" name="ultima_compra" required>
+      </div>
+
+      <label for="dosagem">Dosagem:</label>
+      <div class="input-group">
+        <i class="fa fa-prescription-bottle"></i>
+        <input type="text" id="dosagem" name="dosagem" required>
+      </div>
+
+      <button type="submit"><i class="fa fa-plus-circle"></i> Adicionar Medicamento</button>
+    </form>
+
+    <!-- VOLTAR PARA O DASHBOARD -->
+    <a href="{% url 'dashboard' %}" class="back-button">
+      <i class="fa fa-arrow-left"></i> Voltar para o Início
+    </a>
+  </div>
+
+</body>
+</html>
+

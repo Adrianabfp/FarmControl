@@ -1,9 +1,13 @@
-# Ignorar o ambiente virtual venv
+# Ambiente virtual
 venv/
 
-# Ignorar arquivos de configuração do sistema
+# Arquivos do sistema
 .DS_Store
 Thumbs.db
 
-# Outros arquivos que você queira ignorar
+# Arquivos Python compilados
+__pycache__/
 *.pyc
+
+# Banco de dados local
+db.sqlite3

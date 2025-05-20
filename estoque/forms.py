@@ -9,4 +9,5 @@ class ProdutoForm(forms.ModelForm):
 class MedicamentoForm(forms.ModelForm):
     class Meta:
         model = Medicamento
-        fields = '__all__'
+        fields = ['nome', 'dosagem', 'categoria', 'quantidade','data_validade', 'ultima_compra' ]
+

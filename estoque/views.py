@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Produto, Medicamento
+from .models import Produto, Medicamento, Categoria
 from .forms import ProdutoForm, MedicamentoForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -66,7 +66,14 @@ def adicionar_medicamento(request):
             return redirect('lista_produtos')
     else:
         form = MedicamentoForm()
-    return render(request, 'estoque/adicionar_medicamento.html', {'form': form})
+
+    # Carrega as categorias para preencher o <select>
+    categorias = Categoria.objects.all()
+
+    return render(request, 'estoque/adicionar_medicamento.html', {
+        'form': form,
+        'categorias': categorias
+    })
 
 #Editar produtos            
 def editar_produto(request, pk):
