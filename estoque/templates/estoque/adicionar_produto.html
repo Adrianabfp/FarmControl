@@ -125,11 +125,16 @@
         {{ form.tamanho }}
       </div>
 
-      <label for="id_categoria">Categoria:</label>
-      <div class="input-group">
-        <i class="fa fa-tags"></i>
-        {{ form.categoria }}
+      <div class="form-group">
+        <label for="id_categoria">Categoria:</label>
+        <select name="categoria" id="id_categoria" class="form-control">
+          <option value="1">Alimentos</option>
+          <option value="2">Medicamentos</option>
+          <option value="3">Produtos</option>
+          <option value="4">Fraldas</option>
+        </select>
       </div>
+
 
       <label for="id_quantidade">Quantidade:</label>
       <div class="input-group">
@@ -140,8 +145,9 @@
       <label for="id_data_validade">Data validade:</label>
       <div class="input-group">
         <i class="fa fa-calendar-alt"></i>
-        <input type="date" id="id_data_validade" name="data_validade" required>
+        {{ form.data_validade }}
       </div>
+
 
       <label for="id_ultima_compra">Última compra:</label>
       <div class="input-group">
