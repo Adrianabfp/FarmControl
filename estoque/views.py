@@ -37,6 +37,8 @@ def adicionar_medicamento(request):
         if form.is_valid():
             form.save()
             return redirect('lista_produtos')
+        else:
+            print(form.errors)
     else:
         form = MedicamentoForm()
 

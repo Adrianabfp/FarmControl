@@ -110,6 +110,7 @@
 
   <div class="form-container">
     <h1>Adicionar Produto</h1>
+
     <form method="post">
       {% csrf_token %}
 
@@ -125,16 +126,11 @@
         {{ form.tamanho }}
       </div>
 
-      <div class="form-group">
-        <label for="id_categoria">Categoria:</label>
-        <select name="categoria" id="id_categoria" class="form-control">
-          <option value="1">Alimentos</option>
-          <option value="2">Medicamentos</option>
-          <option value="3">Produtos</option>
-          <option value="4">Fraldas</option>
-        </select>
+      <label for="id_categoria">Categoria:</label>
+      <div class="input-group">
+        <i class="fa fa-tags"></i>
+        {{ form.categoria }}
       </div>
-
 
       <label for="id_quantidade">Quantidade:</label>
       <div class="input-group">
@@ -148,17 +144,17 @@
         {{ form.data_validade }}
       </div>
 
-
       <label for="id_ultima_compra">Última compra:</label>
       <div class="input-group">
         <i class="fa fa-shopping-cart"></i>
         {{ form.ultima_compra }}
       </div>
 
-      <button type="submit"><i class="fa fa-plus-circle"></i> Adicionar Produto</button>
+      <button type="submit">
+        <i class="fa fa-plus-circle"></i> Adicionar Produto
+      </button>
     </form>
 
-    <!-- BOTÃO DE VOLTAR PARA O DASHBOARD -->
     <a href="{% url 'dashboard' %}" class="back-button">
       <i class="fa fa-arrow-left"></i> Voltar para o Início
     </a>
