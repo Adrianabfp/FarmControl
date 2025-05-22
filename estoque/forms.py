@@ -15,3 +15,8 @@ class MedicamentoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'input-form'})
+
+class EntregaForm(forms.Form):
+    paciente = forms.CharField(label="Para quem", max_length=100)
+    data_entrega = forms.DateField(label="Data da Entrega", widget=forms.DateInput(attrs={'type': 'date'}))
+    quantidade = forms.IntegerField(label="Quantidade", min_value=1)

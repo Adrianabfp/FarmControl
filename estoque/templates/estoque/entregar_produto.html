@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registrar Entrega</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3fff3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 420px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #228B22;
+      margin-bottom: 30px;
+      font-size: 26px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 0 10px;
+      background-color: #fff;
+    }
+
+    .input-group i {
+      color: #999;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 10px;
+      background-color: transparent;
+      height: 38px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background-color: #228B22;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1a731a;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      display: inline-block;
+      background-color: #888;
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background-color: #666;
+    }
+
+    /* Estilo para erros do Django */
+    .errorlist {
+      color: red;
+      margin: 0 0 10px 0;
+      padding-left: 0;
+      list-style: none;
+      text-align: left;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1><i class="fa fa-truck-loading"></i> Registrar Entrega</h1>
+
+    <form method="post">
+      {% csrf_token %}
+
+      {% if form.errors %}
+        <div class="errorlist">
+          <strong>Erros no formulário:</strong>
+          <ul>
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <label>Produto:</label>
+      <div class="input-group">
+        <i class="fa fa-box"></i>
+        <input type="text" value="{{ produto.nome }}" readonly>
+      </div>
+
+
+      <label for="{{ form.destinatario.id_for_label }}">Paciente:</label>
+      <div class="input-group">
+        <i class="fa fa-user"></i>
+        {{ form.paciente }}
+      </div>
+
+      <label for="{{ form.data_entrega.id_for_label }}">Data da Entrega:</label>
+      <div class="input-group">
+        <i class="fa fa-calendar-alt"></i>
+        {{ form.data_entrega }}
+      </div>
+
+      <label for="{{ form.quantidade.id_for_label }}">Quantidade:</label>
+      <div class="input-group">
+        <i class="fa fa-sort-numeric-up"></i>
+        {{ form.quantidade }}
+      </div>
+
+      <button type="submit">
+        <i class="fa fa-check-circle"></i> Registrar Entrega de "{{ produto.nome }}"
+      </button>
+    
+    </form>
+
+    <a class="back-button" href="{% url 'lista_produtos' %}">
+        <i class="fa fa-arrow-left"></i> Voltar para lista
+
+    </a>
+  </div>
+
+</body>
+</html>

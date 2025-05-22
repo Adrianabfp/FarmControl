@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY e DEBUG via variável de ambiente para segurança em produção
 SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-de-desenvolvimento-aqui')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
+DEBUG = True
 
 # Ajuste os hosts permitidos para seu domínio no Heroku e localhost
 ALLOWED_HOSTS = ['farmcontrol-adriana-70ca2f0e56ca.herokuapp.com', 'farmcontrol.onrender.com', 'localhost', '127.0.0.1']
@@ -110,3 +110,7 @@ ROLEPERMISSIONS_MODULE = 'usuarios.roles'
 
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import logging
+logging.basicConfig(level=logging.DEBUG)
+

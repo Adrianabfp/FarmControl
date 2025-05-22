@@ -2,63 +2,209 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Controle de Estoque</title>
-    <link rel="stylesheet" href="{% static 'estoque/css/estilo.css' %}">
+  <meta charset="UTF-8">
+  <title>Lista de Produtos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #228B22;
+      margin-bottom: 30px;
+      font-size: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 300px;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #228B22;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #1a731a;
+    }
+
+    .actions {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .actions a {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+      font-size: 14px;
+      transition: transform 0.2s;
+    }
+
+    .actions a:hover {
+      transform: scale(1.05);
+    }
+
+    .botao-verde {
+      background-color: #228B22;
+      color: white;
+    }
+
+    .botao-cinza {
+      background-color: #888;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: #228B22;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .acoes a {
+      color: #228B22;
+      margin-right: 12px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .acoes a:hover {
+      text-decoration: underline;
+    }
+
+    .voltar {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .voltar a {
+      background-color: #888;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .voltar a:hover {
+      background-color: #666;
+    }
+  </style>
 </head>
 <body>
-    <div class="caixa">
-        <h1>Controle de Estoque de Produtos</h1>
+  <div class="container">
+    <h1><i class="fa fa-boxes"></i> Lista de Produtos em Estoque</h1>
 
-        <!-- Barra de Pesquisa -->
-        <form method="get" action="">
-            <input type="text" name="buscar" placeholder="Buscar produto..." />
-            <button type="submit" class="botao-principal">Buscar</button>
-        </form>
+    <form method="get" action="">
+      <input type="text" name="buscar" placeholder="Buscar produto..." />
+      <button type="submit"><i class="fa fa-search"></i> Buscar</button>
+    </form>
 
-        <!-- Botões -->
-        <div style="margin: 20px 0;">
-            <a href="{% url 'adicionar_produto' %}" class="botao-principal">Adicionar Produto</a>
-            <a href="{% url 'adicionar_medicamento' %}" class="botao-secundario">Adicionar Medicamento</a>
-        </div>
-
-        <!-- Tabela de Produtos -->
-        <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Quantidade</th>
-                    <th>Validade</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for produto in produtos %}
-                    <tr>
-                        <td>{{ produto.nome }}</td>
-                        <td>{{ produto.categoria.nome }}</td>
-                        <td>{{ produto.quantidade }}</td>
-                        <td>{{ produto.data_validade }}</td> 
-                        <td>
-                            <a href="{% url 'editar_produto' produto.id %}">Editar</a>
-                            <a href="{% url 'excluir_produto' produto.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="5">Nenhum produto encontrado.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <!-- Botão de voltar ao dashboard -->
-        <div style="margin-top: 30px;">
-            <a href="{% url 'dashboard' %}" class="botao-secundario">← Voltar ao Início</a>
-        </div>
+    <div class="actions">
+      <a href="{% url 'adicionar_produto' %}" class="botao-verde">
+        <i class="fa fa-plus-circle"></i> Adicionar Produto
+      </a>
+      <a href="{% url 'adicionar_medicamento' %}" class="botao-cinza">
+        <i class="fa fa-pills"></i> Adicionar Medicamento
+      </a>
     </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th><i class="fa fa-box"></i> Nome</th>
+          <th><i class="fa fa-tags"></i> Categoria</th>
+          <th><i class="fa fa-sort-numeric-up"></i> Quantidade</th>
+          <th><i class="fa fa-calendar-alt"></i> Validade</th>
+          <th><i class="fa fa-cogs"></i> Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+          <tr>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.categoria.nome }}</td>
+            <td>{{ produto.quantidade }}</td>
+            <td>{{ produto.data_validade }}</td>
+            <td class="acoes">
+              <a href="{% url 'editar_produto' produto.id %}"><i class="fa fa-edit"></i> Editar</a>
+              <a href="{% url 'excluir_produto' produto.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                <i class="fa fa-trash-alt"></i> Excluir
+              <a href="{% url 'entregar_produto' produto.id %}">
+                <i class="fa fa-truck"></i> Entregar
+              </a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" style="text-align: center; font-style: italic; color: #555;">Nenhum produto encontrado.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="voltar">
+      <a href="{% url 'dashboard' %}">
+        <i class="fa fa-arrow-left"></i> Voltar ao Início
+      </a>
+    </div>
+  </div>
 </body>
 </html>
-
-

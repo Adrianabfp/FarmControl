@@ -11,6 +11,8 @@ urlpatterns = [
     path('adicionar-medicamento/', views.adicionar_medicamento, name='adicionar_medicamento'),
     path('editar/<int:pk>/', views.editar_produto, name='editar_produto'), 
     path('excluir/<int:pk>/', views.excluir_produto, name='excluir_produto'),
+    path('produtos/<int:produto_id>/entregar/', views.entregar_produto, name='entregar_produto'),
+
 
     # Páginas de login
     path('login/', LoginRedirecionadoView.as_view(), name='login'),  # Usa sua view customizada

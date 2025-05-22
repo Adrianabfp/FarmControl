@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Produto, Medicamento, Categoria
-from .forms import ProdutoForm, MedicamentoForm
+from .forms import ProdutoForm, MedicamentoForm, EntregaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError
+from django.db.models import Q
+
 
 # Página inicial
 def pagina_inicial(request):
@@ -14,8 +16,12 @@ def pagina_inicial(request):
 def lista_produtos(request):
     produtos = Produto.objects.all()
     busca = request.GET.get('buscar')
+
     if busca:
-        produtos = produtos.filter(nome__icontains=busca)
+        produtos = produtos.filter(
+            Q(nome__icontains=busca) | Q(categoria__nome__icontains=busca)
+        )
+
     produtos = produtos.order_by('nome')
     return render(request, 'estoque/lista_produtos.html', {'produtos': produtos})
 
@@ -59,20 +65,19 @@ def adicionar_medicamento(request):
         form = MedicamentoForm(request.POST)
         if form.is_valid():
             nome = form.cleaned_data['nome']
-            tamanho = form.cleaned_data['tamanho']
+            dosagem = form.cleaned_data['dosagem']
             categoria = form.cleaned_data['categoria']
             data_validade = form.cleaned_data['data_validade']
             ultima_compra = form.cleaned_data['ultima_compra']
-            dosagem = form.cleaned_data['dosagem']
-
+            
             # Verifica se já existe medicamento exatamente igual
             if Medicamento.objects.filter(
                 nome=nome,
-                tamanho=tamanho,
+                dosagem=dosagem,
                 categoria=categoria,
                 data_validade=data_validade,
                 ultima_compra=ultima_compra,
-                dosagem=dosagem
+                
             ).exists():
                 messages.error(request, 'Medicamento já cadastrado com todas as mesmas informações!')
             else:
@@ -96,18 +101,19 @@ def adicionar_medicamento(request):
 @login_required
 def editar_produto(request, pk):
     produto = get_object_or_404(Produto, pk=pk)
+    
     if request.method == 'POST':
-        form = ProdutoForm(request.POST, instance=produto)
+        form = ProdutoForm(request.POST, instance=produto)  # instância passada para edição
         if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, 'Produto editado com sucesso!')
-                return redirect('lista_produtos')
-            except IntegrityError:
-                messages.error(request, 'Erro ao editar: produto já existe com essas informações.')
+            form.save()
+            messages.success(request, 'Produto editado com sucesso!')
+            return redirect('lista_produtos')  # volta para a lista depois de salvar
     else:
-        form = ProdutoForm(instance=produto)
-    return render(request, 'estoque/editar_produto.html', {'form': form})
+        form = ProdutoForm(instance=produto)  # preenche o formulário com dados existentes
+    
+    # Reaproveitando o template de adicionar (por exemplo: 'estoque/adicionar_produto.html')
+    return render(request, 'estoque/adicionar_produto.html', {'form': form, 'editar': True})
+
 
 # Excluir produto
 @login_required
@@ -116,3 +122,29 @@ def excluir_produto(request, pk):
     produto.delete()
     messages.success(request, 'Produto excluído com sucesso!')
     return redirect('lista_produtos')
+
+#Baixar estoque
+@login_required
+def entregar_produto(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    
+    if request.method == 'POST':
+        form = EntregaForm(request.POST)
+        if form.is_valid():
+            quantidade_entregue = form.cleaned_data['quantidade']
+            paciente = form.cleaned_data['paciente']
+            data_entrega = form.cleaned_data['data_entrega']
+            
+            if quantidade_entregue > produto.quantidade:
+                messages.error(request, 'Não há estoque suficiente para essa entrega.')
+            else:
+                produto.quantidade -= quantidade_entregue
+                produto.save()
+                
+                # Aqui você pode salvar os dados da entrega em um modelo, se quiser (não obrigatório)
+                messages.success(request, f'Entrega registrada para {paciente} ({quantidade_entregue} unidades).')
+                return redirect('lista_produtos')
+    else:
+        form = EntregaForm()
+        
+    return render(request, 'estoque/entregar_produto.html', {'produto': produto, 'form': form})

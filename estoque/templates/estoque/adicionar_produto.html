@@ -5,14 +5,15 @@
   <title>Adicionar Produto</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f3fff3;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+
+     body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     }
 
     .form-container {
@@ -53,6 +54,18 @@
       font-size: 16px;
       margin-right: 10px;
     }
+
+    .input-form {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    background-color: transparent;
+    height: 23px;
+    }
+
 
     .input-group input,
     .input-group select {
@@ -102,6 +115,7 @@
       background-color: #666;
     }
 
+    /* Estilo para erros do Django */
     .errorlist {
       color: red;
       margin: 0 0 10px 0;
@@ -116,75 +130,82 @@
 
   <div class="form-container">
     <h1>Adicionar Produto</h1>
-
     {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; text-align: left; margin-bottom: 10px;">
-            {{ message }}
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-    {% if form.errors %}
-      <div style="color: red; text-align: left; margin-bottom: 15px;">
-        <strong>Erros no formulário:</strong>
-        <ul>
-          {% for field in form %}
-            {% for error in field.errors %}
-              <li>{{ field.label }}: {{ error }}</li>
-            {% endfor %}
-          {% endfor %}
-          {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
+    <div style="margin-bottom: 15px; text-align: left;">
+      {% for message in messages %}
+        <div style="padding: 10px; border-radius: 8px; margin-bottom: 8px;
+                    {% if message.tags == 'success' %} background-color: #d4edda; color: #155724; 
+                    {% elif message.tags == 'error' %} background-color: #f8d7da; color: #721c24; 
+                    {% else %} background-color: #fff3cd; color: #856404; 
+                    {% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 
     <form method="post">
       {% csrf_token %}
+
+      {% if form.errors %}
+    <div style="color: red; text-align: left; margin-bottom: 15px;">
+      <strong>Erros no formulário:</strong>
+      <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ field.label }}: {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
 
       <label for="{{ form.nome.id_for_label }}">Nome:</label>
       <div class="input-group">
         <i class="fa fa-box"></i>
         {{ form.nome }}
       </div>
+      {{ form.nome.errors }}
 
       <label for="{{ form.tamanho.id_for_label }}">Tamanho:</label>
       <div class="input-group">
-        <i class="fa fa-ruler-combined"></i>
+        <i class="fa fa-arrows-alt-h"></i>
         {{ form.tamanho }}
       </div>
+      {{ form.tamanho.errors }}
 
       <label for="{{ form.categoria.id_for_label }}">Categoria:</label>
       <div class="input-group">
         <i class="fa fa-tags"></i>
         {{ form.categoria }}
       </div>
+      {{ form.categoria.errors }}
 
       <label for="{{ form.quantidade.id_for_label }}">Quantidade:</label>
       <div class="input-group">
         <i class="fa fa-sort-numeric-up"></i>
         {{ form.quantidade }}
       </div>
+      {{ form.quantidade.errors }}
 
       <label for="{{ form.data_validade.id_for_label }}">Data validade:</label>
       <div class="input-group">
         <i class="fa fa-calendar-alt"></i>
         {{ form.data_validade }}
       </div>
+      {{ form.data_validade.errors }}
 
       <label for="{{ form.ultima_compra.id_for_label }}">Última compra:</label>
       <div class="input-group">
         <i class="fa fa-shopping-cart"></i>
         {{ form.ultima_compra }}
       </div>
+      {{ form.ultima_compra.errors }}
 
-      <button type="submit">
-        <i class="fa fa-plus-circle"></i> Adicionar Produto
-      </button>
+      <button type="submit"><i class="fa fa-plus-circle"></i> Adicionar Produto</button>
     </form>
 
     <a href="{% url 'dashboard' %}" class="back-button">
