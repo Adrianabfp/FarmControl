@@ -14,6 +14,9 @@ class LoginRedirecionadoView(LoginView):
     def get_success_url(self):
         return reverse_lazy('dashboard')
 
+    def form_invalid(self, form):
+        form.add_error(None, "Usuário ou senha incorretos. Por favor, tente novamente.")
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 @login_required

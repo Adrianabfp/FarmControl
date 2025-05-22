@@ -86,7 +86,9 @@
       font-size: 14px;
       border-radius: 10px;
       background-color: transparent;
-      height: 23px;
+      height: 38px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     button {
@@ -138,6 +140,20 @@
 
   <div class="form-container">
     <h1>Adicionar Medicamento</h1>
+    {% if messages %}
+    <div style="margin-bottom: 15px; text-align: left;">
+      {% for message in messages %}
+        <div style="padding: 10px; border-radius: 8px; margin-bottom: 8px;
+                    {% if message.tags == 'success' %} background-color: #d4edda; color: #155724; 
+                    {% elif message.tags == 'error' %} background-color: #f8d7da; color: #721c24; 
+                    {% else %} background-color: #fff3cd; color: #856404; 
+                    {% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
     <form method="post">
       {% csrf_token %}
 

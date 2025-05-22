@@ -63,12 +63,9 @@
       font-size: 14px;
       border-radius: 10px;
       background-color: transparent;
-      height: 23px;
-    }
-
-    .input-group input:focus,
-    .input-group select:focus {
-      outline: none;
+      height: 38px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     button {
@@ -104,6 +101,15 @@
     .back-button:hover {
       background-color: #666;
     }
+
+    .errorlist {
+      color: red;
+      margin: 0 0 10px 0;
+      padding-left: 0;
+      list-style: none;
+      text-align: left;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -111,40 +117,66 @@
   <div class="form-container">
     <h1>Adicionar Produto</h1>
 
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; text-align: left; margin-bottom: 10px;">
+            {{ message }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if form.errors %}
+      <div style="color: red; text-align: left; margin-bottom: 15px;">
+        <strong>Erros no formulário:</strong>
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
     <form method="post">
       {% csrf_token %}
 
-      <label for="id_nome">Nome:</label>
+      <label for="{{ form.nome.id_for_label }}">Nome:</label>
       <div class="input-group">
         <i class="fa fa-box"></i>
         {{ form.nome }}
       </div>
 
-      <label for="id_tamanho">Tamanho:</label>
+      <label for="{{ form.tamanho.id_for_label }}">Tamanho:</label>
       <div class="input-group">
         <i class="fa fa-ruler-combined"></i>
         {{ form.tamanho }}
       </div>
 
-      <label for="id_categoria">Categoria:</label>
+      <label for="{{ form.categoria.id_for_label }}">Categoria:</label>
       <div class="input-group">
         <i class="fa fa-tags"></i>
         {{ form.categoria }}
       </div>
 
-      <label for="id_quantidade">Quantidade:</label>
+      <label for="{{ form.quantidade.id_for_label }}">Quantidade:</label>
       <div class="input-group">
         <i class="fa fa-sort-numeric-up"></i>
         {{ form.quantidade }}
       </div>
 
-      <label for="id_data_validade">Data validade:</label>
+      <label for="{{ form.data_validade.id_for_label }}">Data validade:</label>
       <div class="input-group">
         <i class="fa fa-calendar-alt"></i>
         {{ form.data_validade }}
       </div>
 
-      <label for="id_ultima_compra">Última compra:</label>
+      <label for="{{ form.ultima_compra.id_for_label }}">Última compra:</label>
       <div class="input-group">
         <i class="fa fa-shopping-cart"></i>
         {{ form.ultima_compra }}
@@ -162,4 +194,3 @@
 
 </body>
 </html>
-

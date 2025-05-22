@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Produto, Medicamento, Categoria
 from .forms import ProdutoForm, MedicamentoForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.db import IntegrityError
 
 # Página inicial
 def pagina_inicial(request):
@@ -23,11 +25,32 @@ def adicionar_produto(request):
     if request.method == 'POST':
         form = ProdutoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('lista_produtos')
+            nome = form.cleaned_data['nome']
+            tamanho = form.cleaned_data['tamanho']
+            categoria = form.cleaned_data['categoria']
+            data_validade = form.cleaned_data['data_validade']
+            ultima_compra = form.cleaned_data['ultima_compra']
+
+            # Verifica se já existe produto exatamente igual
+            if Produto.objects.filter(
+                nome=nome, 
+                tamanho=tamanho,
+                categoria=categoria,
+                data_validade=data_validade,
+                ultima_compra=ultima_compra
+            ).exists():
+                messages.error(request, 'Produto já cadastrado com todas as mesmas informações!')
+            else:
+                try:
+                    form.save()
+                    messages.success(request, 'Produto cadastrado com sucesso!')
+                    return redirect('lista_produtos')
+                except IntegrityError:
+                    messages.error(request, 'Erro ao salvar: produto já existe.')
     else:
         form = ProdutoForm()
-    return render(request, 'estoque/adicionar_produto.html', {'form': form})    
+
+    return render(request, 'estoque/adicionar_produto.html', {'form': form})
 
 # Adicionar medicamento
 @login_required
@@ -35,10 +58,30 @@ def adicionar_medicamento(request):
     if request.method == 'POST':
         form = MedicamentoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('lista_produtos')
-        else:
-            print(form.errors)
+            nome = form.cleaned_data['nome']
+            tamanho = form.cleaned_data['tamanho']
+            categoria = form.cleaned_data['categoria']
+            data_validade = form.cleaned_data['data_validade']
+            ultima_compra = form.cleaned_data['ultima_compra']
+            dosagem = form.cleaned_data['dosagem']
+
+            # Verifica se já existe medicamento exatamente igual
+            if Medicamento.objects.filter(
+                nome=nome,
+                tamanho=tamanho,
+                categoria=categoria,
+                data_validade=data_validade,
+                ultima_compra=ultima_compra,
+                dosagem=dosagem
+            ).exists():
+                messages.error(request, 'Medicamento já cadastrado com todas as mesmas informações!')
+            else:
+                try:
+                    form.save()
+                    messages.success(request, 'Medicamento cadastrado com sucesso!')
+                    return redirect('lista_produtos')
+                except IntegrityError:
+                    messages.error(request, 'Erro ao salvar: medicamento já existe.')
     else:
         form = MedicamentoForm()
 
@@ -56,8 +99,12 @@ def editar_produto(request, pk):
     if request.method == 'POST':
         form = ProdutoForm(request.POST, instance=produto)
         if form.is_valid():
-            form.save()
-            return redirect('lista_produtos')
+            try:
+                form.save()
+                messages.success(request, 'Produto editado com sucesso!')
+                return redirect('lista_produtos')
+            except IntegrityError:
+                messages.error(request, 'Erro ao editar: produto já existe com essas informações.')
     else:
         form = ProdutoForm(instance=produto)
     return render(request, 'estoque/editar_produto.html', {'form': form})
@@ -67,5 +114,5 @@ def editar_produto(request, pk):
 def excluir_produto(request, pk):
     produto = get_object_or_404(Produto, pk=pk)
     produto.delete()
+    messages.success(request, 'Produto excluído com sucesso!')
     return redirect('lista_produtos')
-

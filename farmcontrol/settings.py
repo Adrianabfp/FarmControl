@@ -61,8 +61,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'farmcontrol.wsgi.application'
 
 # Configuração do banco de dados:
-# Usa PostgreSQL no Heroku via DATABASE_URL
-# Usa SQLite localmente como fallback
+# Usa PostgreSQL 
 
 
 DATABASES = {
