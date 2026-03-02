@@ -1,0 +1,257 @@
+/* Estilo geral */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+/* Container dos formulários */
+.form-container, .container {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 420px;
+  text-align: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Títulos */
+h1 {
+  text-align: center;
+  color: #228B22;
+  margin-bottom: 30px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Grupo de input com ícones */
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0 10px;
+  background-color: #fff;
+}
+
+.input-group i {
+  color: #999;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.input-group input,
+.input-group select {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: transparent;
+  height: 38px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Botões */
+button, .back-button {
+  padding: 12px 24px;
+  background-color: #228B22;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+button:hover, .back-button:hover {
+  background-color: #1a731a;
+}
+
+/* Link voltar */
+.back-button {
+  background-color: #888;
+}
+
+.back-button:hover {
+  background-color: #666;
+}
+
+/* Mensagens */
+.form-errors {
+  color: red;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.messages .success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.messages .error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+/* Logo */
+.logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+/* Formulários de busca */
+form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 300px;
+  font-size: 15px;
+}
+
+/* Ações na tabela */
+.actions {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.actions a {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 10px;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+.actions a:hover {
+  transform: scale(1.05);
+}
+
+/* Cores específicas */
+.botao-verde {
+  background-color: #228B22;
+  color: white;
+}
+
+.botao-cinza {
+  background-color: #888;
+  color: white;
+}
+
+.botao-baixar {
+  color: #FF8C00;
+  font-weight: bold;
+  margin-right: 12px;
+  text-decoration: none;
+}
+
+.botao-baixar:hover {
+  text-decoration: underline;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #228B22;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+.acoes a {
+  color: #228B22;
+  margin-right: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.acoes a:hover {
+  text-decoration: underline;
+}
+
+/* Voltar */
+.voltar {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.voltar a {
+  background-color: #888;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.voltar a:hover {
+  background-color: #666;
+}
+
+/* Nenhum item */
+.nenhum {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
